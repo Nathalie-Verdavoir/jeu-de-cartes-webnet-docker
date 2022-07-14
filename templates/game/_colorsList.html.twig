@@ -1,14 +1,6 @@
 {#     {% include 'game/_colorsList.html.twig' %} #}
 
 {% for color in colors %}
-    {% if color == 'S' %}
-        Pique
-    {% elseif color == 'H' %}
-        Coeur
-    {% elseif color == 'D' %}
-        Carreau
-    {% else %}
-        Trèfle
-    {% endif %}
+   {{ app.session.get('colorName').getName(color)}}
     {% if loop.index != loop.length %}-{% endif %}
 {% endfor %}

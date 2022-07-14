@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
+
 class Deck
 {
-    public array $goodOrderColors;
-    public array $goodOrderValues;
-    public array $mixedColors;
-    public array $mixedValues;
-    public array $mixedDeck;
+    private array $goodOrderColors;
+    private array $goodOrderValues;
+    private array $mixedColors;
+    private array $mixedValues;
+    private array $mixedDeck;
 
     public function __construct() {
         $this->mixedColors = $this->goodOrderColors = ['C','D','H','S'];
@@ -26,7 +27,6 @@ class Deck
             $new[$key] =  $this->mixedValues[$key];
         }
         $this->mixedValues = $new;
-        
         $this->mixedCards();
     }
 
@@ -48,5 +48,101 @@ class Deck
     public function getMixedDeck(): array
     {
         return $this->mixedDeck;
+    }
+
+    /**
+     * Get the value of goodOrderColors
+     *
+     * @return array
+     */
+    public function getGoodOrderColors(): array
+    {
+        return $this->goodOrderColors;
+    }
+
+    /**
+     * Set the value of goodOrderColors
+     *
+     * @param array $goodOrderColors
+     *
+     * @return self
+     */
+    public function setGoodOrderColors(array $goodOrderColors): self
+    {
+        $this->goodOrderColors = $goodOrderColors;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of goodOrderValues
+     *
+     * @return array
+     */
+    public function getGoodOrderValues(): array
+    {
+        return $this->goodOrderValues;
+    }
+
+    /**
+     * Set the value of goodOrderValues
+     *
+     * @param array $goodOrderValues
+     *
+     * @return self
+     */
+    public function setGoodOrderValues(array $goodOrderValues): self
+    {
+        $this->goodOrderValues = $goodOrderValues;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of mixedColors
+     *
+     * @return array
+     */
+    public function getMixedColors(): array
+    {
+        return $this->mixedColors;
+    }
+
+    /**
+     * Set the value of mixedColors
+     *
+     * @param array $mixedColors
+     *
+     * @return self
+     */
+    public function setMixedColors(array $mixedColors): self
+    {
+        $this->mixedColors = $mixedColors;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of mixedValues
+     *
+     * @return array
+     */
+    public function getMixedValues(): array
+    {
+        return $this->mixedValues;
+    }
+
+    /**
+     * Set the value of mixedValues
+     *
+     * @param array $mixedValues
+     *
+     * @return self
+     */
+    public function setMixedValues(array $mixedValues): self
+    {
+        $this->mixedValues = $mixedValues;
+
+        return $this;
     }
 }

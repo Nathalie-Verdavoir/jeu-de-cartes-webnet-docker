@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\ColorName;
 use App\Entity\Deck;
 use App\Entity\Game;
+use App\Entity\ValueName;
 use App\Form\GameType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,16 +30,27 @@ class GameController extends AbstractController
      * @Route("/", name="game_init", methods={"GET","POST"})
      */
     public function gameInit(Request $request): Response
-    {   $numberOfCards = new Game();
-        $form = $this->createForm(GameType::class, $numberOfCards);
+    {   
+        $session = $request->getSession();  
+        /** @var Deck $deck */
+        $deck = new Deck();
+        $session->set('deck', $deck); 
+        /** @var ColorName $color */
+        $colorName = new ColorName();
+        $session->set('colorName', $colorName); 
+        /** @var ValueName $color */
+        $valueName = new ValueName();
+        $session->set('valueName', $valueName);
+        $game = new Game();
+        $form = $this->createForm(GameType::class, $game);
         $form->handleRequest($request);
-        
+       
         if ($form->isSubmitted() && $form->isValid()) {
-        return $this->redirectToRoute('game_index_random', [
-            "numberOfCards" => $form->getData('num')->getNum(),
-            "cardsTemplate" => $form->getData('cardsTemplate')->getCardsTemplate(),
-
-        ]);
+            return $this->redirectToRoute('game_index_random', [
+                "numberOfCards" => $form->getData('num')->getNum(),
+                "cardsTemplate" => $form->getData('cardsTemplate')->getCardsTemplate(),
+                
+            ]);
         }
 
         return $this->render('game/init.html.twig',array(
@@ -54,10 +67,10 @@ class GameController extends AbstractController
         
         $session = $request->getSession();  
         $deck = new Deck();
-        $colors = $deck->mixedColors; 
-        $goodOrderColors = $deck->goodOrderColors;
-        $values = $deck->mixedValues; 
-        $goodOrderValues = $deck->goodOrderValues; 
+        $colors = $deck->getMixedColors(); 
+        $goodOrderColors = $deck->getGoodOrderColors();
+        $values = $deck->getMixedValues(); 
+        $goodOrderValues = $deck->getGoodOrderValues(); 
         $cards = $deck->getMixedDeck();
         $result =  [];
         $orderedResult =  [];
@@ -69,9 +82,7 @@ class GameController extends AbstractController
             }
          }else{$result[0] = $cards[0];}
 
-            
         $session->set('result', $result);
-        
         foreach ($goodOrderColors as $color){
             foreach ($goodOrderValues as $value){
                 /** @var Card $card */
