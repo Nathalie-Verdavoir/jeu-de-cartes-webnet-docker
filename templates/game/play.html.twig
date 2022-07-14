@@ -16,15 +16,7 @@
             {% include 'game/_valuesList.html.twig' with  {'values': goodOrderValues} %}
         </span>
     </div>
-    <div class="bg-success d-flex flex-row flex-wrap my-3 py-1">
-        {% for card in app.session.get('orderedResult')  %}
-            <div class="cards-bg d-flex flex-row border border-2 rounded-2 m-2">
-                <span class="cards d-inline f32 {{card.color}}{{card.value}}" title="{{card.color}}{{card.value}}"></span>
-            </div> 
-        {% else %}
-            no records found
-        {% endfor %}
-    </div>
+    {% include 'game/_hand.html.twig' with  {'cardsTemplate': cardsTemplate, 'cards': app.session.get('orderedResult')} %}
 
     <div class="d-flex flex-row justify-content-around my-3 py-1">
         <span>Mélange des couleurs :
@@ -34,15 +26,7 @@
             {% include 'game/_valuesList.html.twig' with  {'values': values} %}
         </span>
     </div>
-    <div class="bg-warning d-flex flex-row flex-wrap my-3 py-1">
-        {% for card in app.session.get('result')  %}
-            <div class="cards-bg d-flex flex-row border border-2 rounded-2 m-2">
-                <span class="cards d-inline f32 {{card.color}}{{card.value}}" title="{{card.color}}{{card.value}}"></span>
-            </div> 
-        {% else %}
-            no records found
-        {% endfor %}
-    </div>
+    {% include 'game/_hand.html.twig' with  {'cardsTemplate': cardsTemplate, 'cards': app.session.get('result')} %}
     
 {% endblock %}
 

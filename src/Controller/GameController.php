@@ -35,6 +35,8 @@ class GameController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
         return $this->redirectToRoute('game_index_random', [
             "numberOfCards" => $form->getData('num')->getNum(),
+            "cardsTemplate" => $form->getData('cardsTemplate')->getCardsTemplate(),
+
         ]);
         }
 
@@ -45,9 +47,9 @@ class GameController extends AbstractController
     }
 
     /**
-     * @Route("/random/{numberOfCards}", name="game_index_random")
+     * @Route("/random/{numberOfCards}/{cardsTemplate}", name="game_index_random")
      */
-    public function gameHand(int $numberOfCards = 5, Request $request): Response
+    public function gameHand(int $numberOfCards = 5, string $cardsTemplate = '', Request $request): Response
     {
         
         $session = $request->getSession();  
@@ -59,12 +61,15 @@ class GameController extends AbstractController
         $cards = $deck->getMixedDeck();
         $result =  [];
         $orderedResult =  [];
-       
-            $index = array_rand($cards,$numberOfCards); 
+        $index = array_rand($cards,$numberOfCards); 
+        if($numberOfCards>1){
             for ($i=0;$i < $numberOfCards ;$i++){   
                 $result[$index[$i]] = $cards[$index[$i]];  
                 unset($cards[$index[$i]]); 
             }
+         }else{$result[0] = $cards[0];}
+
+            
         $session->set('result', $result);
         
         foreach ($goodOrderColors as $color){
@@ -82,6 +87,7 @@ class GameController extends AbstractController
 
 
         return $this->render('game/play.html.twig', [
+            "cardsTemplate" => $cardsTemplate,
             "colors" => $colors,
             "values" => $values,
             "goodOrderColors" => $goodOrderColors,
