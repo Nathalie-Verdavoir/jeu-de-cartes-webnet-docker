@@ -1,18 +1,6 @@
 {# {% include 'game/_valuesList.html.twig' %} #}
 
  {% for value in values %}
-    {% if value == 'T' %}
-        10
-    {% elseif value == 'J' %}
-        Valet
-    {% elseif value == 'Q' %}
-        Dame
-    {% elseif value == 'K' %}
-        Roi
-    {% elseif value == 'A' %}
-        AS
-    {% else %}
-        {{value}}
-    {% endif %}
+    {{ app.session.get('valueName').getName(value)}}
     {% if loop.index != loop.length %}-{% endif %}
 {% endfor %}

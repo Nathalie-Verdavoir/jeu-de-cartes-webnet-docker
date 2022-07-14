@@ -87,7 +87,7 @@ class GameController extends AbstractController
             foreach ($goodOrderValues as $value){
                 /** @var Card $card */
                 foreach ($result as $card){
-                    if ($card->getColor() == $color and  $card->getValue() == $value){
+                    if ($card->getColor() == $color && $card->getValue() == $value){
                         array_push($orderedResult,$card);
                     }
                 } 
