@@ -34,4 +34,3 @@ class GameType extends AbstractType
         ]);
     }
 }
- 
