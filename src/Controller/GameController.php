@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Deck;
 use App\Entity\Game;
 use App\Form\GameType;
-use App\Form\NumberOfCardsType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,18 +15,17 @@ class GameController extends AbstractController
     /**
      * @Route("/game", name="game_index")
      */
-    public function gameIndex(): Response
+    public function gameIndex(): Response // show mixed full deck 
     {
-
         $deck = new Deck();
 
         return $this->render('game/index.html.twig', [
-            "cards" => $deck->getDeck(),
+            "cards" => $deck->getMixedDeck(),
         ]);
     }
 
     /**
-     * @Route("/", name="game_init", methods={"GET","HEAD"})
+     * @Route("/", name="game_init", methods={"GET","POST"})
      */
     public function gameInit(Request $request): Response
     {   $numberOfCards = new Game();
@@ -40,9 +38,9 @@ class GameController extends AbstractController
         ]);
         }
 
-        return $this->renderForm('game/init.html.twig',array(
-            'num' => $numberOfCards,
-            ), Response::HTTP_SEE_OTHER);
+        return $this->render('game/init.html.twig',array(
+            'form' => $form->createView(),
+            ));
         
     }
 
@@ -54,21 +52,33 @@ class GameController extends AbstractController
         
         $session = $request->getSession();  
         $deck = new Deck();
-        $colors = $deck->colors; 
+        $colors = $deck->mixedColors; 
         $goodOrderColors = $deck->goodOrderColors;
-        $values = $deck->values; 
+        $values = $deck->mixedValues; 
         $goodOrderValues = $deck->goodOrderValues; 
-        $cards = $deck->deck;
+        $cards = $deck->getMixedDeck();
         $result =  [];
+        $orderedResult =  [];
        
             $index = array_rand($cards,$numberOfCards); 
             for ($i=0;$i < $numberOfCards ;$i++){   
                 $result[$index[$i]] = $cards[$index[$i]];  
                 unset($cards[$index[$i]]); 
             }
-        $session->set('cards', $cards);
         $session->set('result', $result);
         
+        foreach ($goodOrderColors as $color){
+            foreach ($goodOrderValues as $value){
+                /** @var Card $card */
+                foreach ($result as $card){
+                    if ($card->getColor() == $color and  $card->getValue() == $value){
+                        array_push($orderedResult,$card);
+                    }
+                } 
+            }    
+        }
+
+        $session->set('orderedResult', $orderedResult);
 
 
         return $this->render('game/play.html.twig', [

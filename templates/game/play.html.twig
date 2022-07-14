@@ -1,104 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Play{% endblock %}
+{% block title %}Jeu{% endblock %}
 
 {% block body %}
-    <h1>Play</h1>
-    {% dump(app.session.get('cards')) %}
-    {% dump(colors) %}
-    <div class="d-flex flex-row justify-content-around my-3 py-1">
-        {#<span class="cards border d-inline f32 {{card.color}}{{card.value}}" title="{{card.color}}{{card.value}}"></span> 
-    #}</div>
+    <h1>Jeu</h1>
+    
+    <a class="btn btn-success" href={{ path("game_init") }}>Nouvelle partie</a>
+    <a class="btn btn-warning" href={{ path("game_index") }}>Voir le jeu complet mélangé</a>
+        
     <div class="d-flex flex-row justify-content-around my-3 py-1">
         <span>Bon ordre des couleurs :
-            {% for color in goodOrderColors %}
-                {% if color == 'S' %}
-                    Pique
-                {% elseif color == 'H' %}
-                    Coeur
-                {% elseif color == 'D' %}
-                    Carreau
-                {% else %}
-                    Trèfle
-                {% endif %}
-                {% if loop.index != loop.length %}-{% endif %}
-            {% endfor %}
+            {% include 'game/_colorsList.html.twig' with  {'colors': goodOrderColors} %}
         </span>
         <span>Bon ordre des valeurs :
-            {% for value in goodOrderValues %}
-                {% if value == 'T' %}
-                    10
-                {% elseif value == 'J' %}
-                    Valet
-                {% elseif value == 'Q' %}
-                    Dame
-                {% elseif value == 'K' %}
-                    Roi
-                {% elseif value == 'A' %}
-                    AS
-                {% else %}
-                    {{value}}
-                {% endif %}
-                {% if loop.index != loop.length %}-{% endif %}
-            {% endfor %}
+            {% include 'game/_valuesList.html.twig' with  {'values': goodOrderValues} %}
         </span>
     </div>
     <div class="bg-success d-flex flex-row flex-wrap my-3 py-1">
-         
-            {% for color in goodOrderColors  %}
-                {% for value in goodOrderValues  %}
-                    {% for card in app.session.get('result')  %}
-                        {% if card.color == color and  card.value == value %}
-                            <div class="cards-bg d-flex flex-row border border-2 rounded-2 m-2">
-                            <span class="cards d-inline f32 {{card.color}}{{card.value}}" title="{{card.color}}{{card.value}}"></span>
-                            </div>
-                        {% endif %}
-                    {% endfor %} 
-                {% endfor %}    
-            {% endfor %}
-            
-        </div>
-
+        {% for card in app.session.get('orderedResult')  %}
+            <div class="cards-bg d-flex flex-row border border-2 rounded-2 m-2">
+                <span class="cards d-inline f32 {{card.color}}{{card.value}}" title="{{card.color}}{{card.value}}"></span>
+            </div> 
+        {% else %}
+            no records found
+        {% endfor %}
+    </div>
 
     <div class="d-flex flex-row justify-content-around my-3 py-1">
         <span>Mélange des couleurs :
-            {% for color in colors %}
-                {% if color == 'S' %}
-                    Pique
-                {% elseif color == 'H' %}
-                    Coeur
-                {% elseif color == 'D' %}
-                    Carreau
-                {% else %}
-                    Trèfle
-                {% endif %}
-                {% if loop.index != loop.length %}-{% endif %}
-            {% endfor %}
+            {% include 'game/_colorsList.html.twig' with {'colors': colors} %}
         </span>
         <span>Mélange des valeurs :
-            {% for value in values %}
-                {% if value == 'T' %}
-                    10
-                {% elseif value == 'J' %}
-                    Valet
-                {% elseif value == 'Q' %}
-                    Dame
-                {% elseif value == 'K' %}
-                    Roi
-                {% elseif value == 'A' %}
-                    AS
-                {% else %}
-                    {{value}}
-                {% endif %}
-                {% if loop.index != loop.length %}-{% endif %}
-            {% endfor %}
+            {% include 'game/_valuesList.html.twig' with  {'values': values} %}
         </span>
     </div>
     <div class="bg-warning d-flex flex-row flex-wrap my-3 py-1">
         {% for card in app.session.get('result')  %}
-                 <div class="cards-bg d-flex flex-row border border-2 rounded-2 m-2">
+            <div class="cards-bg d-flex flex-row border border-2 rounded-2 m-2">
                 <span class="cards d-inline f32 {{card.color}}{{card.value}}" title="{{card.color}}{{card.value}}"></span>
-                 </div> 
+            </div> 
         {% else %}
             no records found
         {% endfor %}

@@ -6,65 +6,47 @@ class Deck
 {
     public array $goodOrderColors;
     public array $goodOrderValues;
-    public array $colors;
-    public array $values;
-    public array $deck;
+    public array $mixedColors;
+    public array $mixedValues;
+    public array $mixedDeck;
 
     public function __construct() {
-        $this->colors = $this->goodOrderColors = ['C','D','H','S'];
-        $keys = array_keys( $this->colors);
+        $this->mixedColors = $this->goodOrderColors = ['C','D','H','S'];
+        $keys = array_keys( $this->mixedColors);
         shuffle($keys);
         foreach($keys as $key) {
-            $new[$key] =  $this->colors[$key];
+            $new[$key] =  $this->mixedColors[$key];
         }
-        $this->colors = $new;
+        $this->mixedColors = $new;
 
-        $this->values = $this->goodOrderValues = ['2','3','4','5','6','7','8','9','T','J','Q','K','A'];
-        $keys = array_keys( $this->values);
+        $this->mixedValues = $this->goodOrderValues = ['2','3','4','5','6','7','8','9','T','J','Q','K','A'];
+        $keys = array_keys( $this->mixedValues);
         shuffle($keys);
         foreach($keys as $key) {
-            $new[$key] =  $this->values[$key];
+            $new[$key] =  $this->mixedValues[$key];
         }
-        $this->values = $new;
+        $this->mixedValues = $new;
         
-        $this->initialiseCards();
+        $this->mixedCards();
     }
 
-    public function initialiseCards()
+    public function mixedCards()
     {
-        foreach ($this->colors AS $color) {
-            foreach ($this->values AS $value) {
-                $deck[] = new Card($color,$value);
-                $this->deck = $deck;
+        foreach ($this->mixedColors AS $color) {
+            foreach ($this->mixedValues AS $value) {
+                $mixedDeck[] = new Card($color,$value);
+                $this->mixedDeck = $mixedDeck;
             }
         }
     }
 
     /**
-     * Set the value of deck
+     * Get the value of mixedDeck
      *
-     * @param array $deck
-     *
-     * @return self
+     * @return array
      */
-    public function getDeck() :array
+    public function getMixedDeck(): array
     {
-        return $this->deck;
-    }
-
-    /**
-     * Set the value of deck
-     *
-     * @param array $deck
-     *
-     * @return self
-     */
-    public function setDeck(Array $deck) {
-        $this->deck = $deck;
-    }
-
-    public function shuffleDeck()
-    {
-        return shuffle($this->deck);
+        return $this->mixedDeck;
     }
 }

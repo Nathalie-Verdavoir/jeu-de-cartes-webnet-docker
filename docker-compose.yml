@@ -1,19 +1,7 @@
 version: '3.8'
 
 services:
-  database:
-    container_name: database
-    image: mariadb:10.4.24 
-    restart: always
-    ports:
-      - 3306:3306
-    volumes:
-      - db-data:/var/lib/mysql
-    environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
-    networks:
-        - dev
-
+  
   php:
     container_name: php
     ports:
@@ -28,31 +16,10 @@ services:
     restart: always
     networks:
       - dev
-    # command: 
-    #   - sh -c "composer install"
-    #   - sh -c "symfony server:start"
     build:
       context: .
       dockerfile: Dockerfile
-    depends_on:
-      - database
-    links:
-      - database
-
-  phpmyadmin:
-    image: phpmyadmin
-    restart: always
-    ports:
-      - 8080:80
-    environment:
-       PMA_HOST: database
-    networks:
-        - dev
-    depends_on:
-      - database
-    links:
-      - database
-
+   
 networks:
     dev:
 
