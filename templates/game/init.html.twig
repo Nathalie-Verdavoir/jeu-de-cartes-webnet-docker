@@ -1,0 +1,12 @@
+{% extends 'welcome.html.twig' %}
+
+{% block title %}Ajouter  Status{% endblock %}
+
+{% block main %}
+    <h1>Ajouter Status</h1>
+{{ form_start(form) }}
+    <a type="button" class="btn" href="{{ path('status_index', {'page': 1}) }}">Retour</a>{{ form_start(form) }} 
+    <button class="btn btn-success inlineForm">{{ button_label|default('Enregistrer') }}</button>
+    {{ form_widget(form) }}
+{{ form_end(form) }}
+{% endblock %}
