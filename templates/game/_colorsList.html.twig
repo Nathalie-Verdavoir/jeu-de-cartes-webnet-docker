@@ -1,6 +1,6 @@
 {#     {% include 'game/_colorsList.html.twig' %} #}
 
 {% for color in colors %}
-   {{ app.session.get('colorName').getName(color)}}
+   {{ game.colorName.getName(color)}}
     {% if loop.index != loop.length %}-{% endif %}
 {% endfor %}

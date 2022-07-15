@@ -1,6 +1,6 @@
 {# {% include 'game/_valuesList.html.twig' %} #}
 
  {% for value in values %}
-    {{ app.session.get('valueName').getName(value)}}
+    {{ game.valueName.getName(value)}}
     {% if loop.index != loop.length %}-{% endif %}
 {% endfor %}
