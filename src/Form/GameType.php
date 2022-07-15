@@ -31,8 +31,8 @@ class GameType extends AbstractType
             ])
             ->add('cardsTemplate', ChoiceType::class,[
                 'choices' => [
-                    'Standard' => '0',
                     'Fun' => 'fun',
+                    'Standard' => '0',
                 ],
                 'attr' => ['class' => 'ms-2 box questions'],
             ])
