@@ -10,24 +10,38 @@ class Deck
     private array $mixedColors;
     private array $mixedValues;
     private array $mixedDeck;
+    private array $fullDeck;
 
     public function __construct() {
         $this->mixedColors = $this->goodOrderColors = ['C','D','H','S'];
-        $keys = array_keys( $this->mixedColors);
-        shuffle($keys);
-        foreach($keys as $key) {
-            $new[$key] =  $this->mixedColors[$key];
-        }
-        $this->mixedColors = $new;
+        $this->mixedColors = $this->random($this->mixedColors);
 
         $this->mixedValues = $this->goodOrderValues = ['2','3','4','5','6','7','8','9','T','J','Q','K','A'];
-        $keys = array_keys( $this->mixedValues);
+        $this->mixedValues = $this->random($this->mixedValues);
+        
+        $this->mixedCards();
+        $this->fullSetOfCards();
+    }
+
+
+    public function random($suit)
+    {
+        $keys = array_keys($suit);
         shuffle($keys);
         foreach($keys as $key) {
-            $new[$key] =  $this->mixedValues[$key];
+            $new[$key] =  $suit[$key];
         }
-        $this->mixedValues = $new;
-        $this->mixedCards();
+        return $new;
+    }
+
+    public function fullSetOfCards()
+    {
+        foreach ($this->goodOrderColors AS $color) {
+            foreach ($this->goodOrderValues AS $value) {
+                $fullDeck[] = new Card($color,$value);
+                $this->fullDeck = $fullDeck;
+            }
+        }
     }
 
     public function mixedCards()
@@ -49,7 +63,7 @@ class Deck
     {
         return $this->mixedDeck;
     }
-
+    
     /**
      * Get the value of goodOrderColors
      *
@@ -145,4 +159,31 @@ class Deck
 
         return $this;
     }
+
+    /**
+     * Get the value of fullDeck
+     *
+     * @return array
+     */
+    public function getFullDeck(): array
+    {
+        return $this->fullDeck;
+    }
+
+    /**
+     * Set the value of fullDeck
+     *
+     * @param array $fullDeck
+     *
+     * @return self
+     */
+    public function setFullDeck(array $fullDeck): self
+    {
+        $this->fullDeck = $fullDeck;
+
+        return $this;
+    }
+
+
+    
 }

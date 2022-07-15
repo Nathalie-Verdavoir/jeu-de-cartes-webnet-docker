@@ -14,15 +14,27 @@ class GameType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder 
+        $builder
+            ->add('preferedColors', TextType::class,[
+                'mapped' => false,
+                'attr' => ['class' => 'd-none'],
+                'label' => ' ',
+            ])
+            ->add('preferedValues', TextType::class,[
+                'mapped' => false,
+                'attr' => ['class' => 'd-none'],
+                'label' => ' ',
+            ]) 
             ->add('num', TextType::class,[
                 'label' => 'Combien de cartes voulez-vous?',
+                'attr' => ['class' => 'ms-2 box questions'],
             ])
             ->add('cardsTemplate', ChoiceType::class,[
                 'choices' => [
                     'Standard' => '0',
                     'Fun' => 'fun',
                 ],
+                'attr' => ['class' => 'ms-2 box questions'],
             ])
             ;
     }

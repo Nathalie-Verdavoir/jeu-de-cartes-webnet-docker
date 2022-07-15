@@ -1,0 +1,35 @@
+.container {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 10px;
+    margin: 35px;
+  }
+  
+.box {
+border: 3px solid rgb(14, 123, 13);
+background-color: #ddd;
+border-radius: .5em;
+padding: 10px;
+cursor: move;
+}
+
+.box.colors {
+  border: 3px solid rgb(201, 83, 83);
+  background-color: #ddd;
+  border-radius: .5em;
+  padding: 10px;
+  cursor: move;
+}
+
+.box.questions {
+  border: 3px solid #0d6efd;
+  background-color: #ddd;
+  border-radius: .5em;
+  padding: 10px;
+  cursor: move;
+}
+
+.box.over {
+  border: 3px dotted #666;
+}
+

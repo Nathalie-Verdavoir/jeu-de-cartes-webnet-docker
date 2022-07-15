@@ -1,6 +1,6 @@
 {#     {% include 'game/_hand.html.twig' %} #}
 
-<div class="bg-success d-flex flex-row flex-wrap my-3 py-1">
+<div class="bg-{{bg}} d-flex flex-row flex-wrap my-3 py-1">
     {% for card in cards  %}
         <div class="cards-bg d-flex flex-row border border-2 rounded-2 m-2">
             <span class="cards d-inline f32 {{cardsTemplate}} {{card.color}}{{card.value}}" title="{{card.color}}{{card.value}}"></span>
