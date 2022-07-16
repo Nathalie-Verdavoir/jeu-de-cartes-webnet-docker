@@ -15,18 +15,18 @@
         <a class="btn btn-danger ms-3 mt-3" href="{{ path("game_random_colors")}}">Changer l'ordre des couleurs aléatoirement</a>
         <span class="ms-2">Ou déplacez-les pour choisir votre ordre préféré.</span>
     </span>
-    <div class="container">
+    <div class="container-drop">
         {% for color in deck.mixedColors %}
-            <div draggable="true" id={{color}} class="box colors">{{game.colorName.getName(color)}}</div>
+            <div draggable="true" id={{color}} class="box colors red">{{game.colorName.getName(color)}}</div>
         {% endfor %}
     </div>
     <span class="d-flex align-items-baseline justify-content-center">
         <a class="btn btn-success ms-3 mt-3" href="{{ path("game_random_values")}}">Changer l'ordre des valeurs aléatoirement</a>
         <span class="ms-2">Ou déplacez-les pour choisir votre ordre préféré.</span>
     </span>  
-    <div class="container">
+    <div class="container-drop">
         {% for value in deck.mixedValues %}
-            <div draggable="true" id={{value}} class="box values">{{game.valueName.getName(value)}}</div>
+            <div draggable="true" id={{value}} class="box values green">{{game.valueName.getName(value)}}</div>
         {% endfor %}
     </div>
     <div class="d-flex justify-content-center">

@@ -1,24 +1,24 @@
-.container {
-    display: grid;
-    grid-template-columns: repeat(9, 1fr);
-    gap: 10px;
-    margin: 35px;
-  }
+.container-drop {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 10px;
+  margin: 35px;
+}
   
 .box {
-border: 3px solid rgb(14, 123, 13);
-background-color: #ddd;
-border-radius: .5em;
-padding: 10px;
-cursor: move;
-}
-
-.box.colors {
-  border: 3px solid rgb(201, 83, 83);
   background-color: #ddd;
   border-radius: .5em;
-  padding: 10px;
   cursor: move;
+}
+
+.box.green {
+  border: 3px solid rgb(14, 123, 13);
+  padding: 10px;
+}
+
+.box.red {
+  border: 3px solid rgb(201, 83, 83);
+  padding: 10px;
 }
 
 .box.questions {
