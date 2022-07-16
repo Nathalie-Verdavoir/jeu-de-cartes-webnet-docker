@@ -16,7 +16,7 @@ class Game
     private ColorName $colorName;
     private ValueName $valueName;
 
-    public function __construct(int $num =2, string $cardsTemplate= '') {
+    public function __construct(int $num = 13, string $cardsTemplate= '') {
         $this->num = $num;
         $this->cardsTemplate = $cardsTemplate;
 
