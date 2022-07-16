@@ -35,7 +35,7 @@ class GameController extends AbstractController
        
         $session = $request->getSession();  
          
-        $game = $session->get('game')===null ? new Game() : $session->get('game');
+        $game = $session->get('game', new Game());//if no game in session, create a new one (second argument)
         $session->set('game',$game);
         $form = $this->createForm(GameType::class, $game);
         $form->handleRequest($request);
@@ -69,7 +69,7 @@ class GameController extends AbstractController
     {
         
         $session = $request->getSession(); 
-        $game=$session->get('game');
+        $game=$session->get('game', new Game());
         $deck = $game->getDeck();
         $colors = $deck->getMixedColors(); 
         $values = $deck->getMixedValues(); 
