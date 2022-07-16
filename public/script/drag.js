@@ -1,4 +1,5 @@
 const completePreferedOrders = () => {
+  if(document.getElementById('game_preferedValues')) {
   let values = document.querySelectorAll('.values');
  values=Array.from(values).map(v=> {
   return v.id;
@@ -9,6 +10,7 @@ const completePreferedOrders = () => {
     return v.id;
     });
   document.getElementById('game_preferedColors').value=colors;
+  }
 }
 
   document.addEventListener('DOMContentLoaded', (event) => {
@@ -49,22 +51,41 @@ const completePreferedOrders = () => {
       e.stopPropagation();
     
       if (dragSrcEl !== this) {
+        
         dragSrcEl.innerHTML = this.innerHTML;
         let id = this.id;
         this.id = dragSrcEl.id;
         dragSrcEl.id = id;
+        if(!document.getElementById('game_preferedValues')) { //only for cards in game
+
+
+          let t1 = dragSrcEl.title;
+          let t2 = e.target.title;
+          let class1=dragSrcEl.classList.toString();
+          let class2=e.target.classList.toString();
+
+          dragSrcEl.classList=class1.replace(t1,t2);
+          this.classList=class2.replace(t2,t1);
+
+          this.title = t1;
+          dragSrcEl.title = t2;
+          if(dragSrcEl.title===this.title){
+            document.querySelectorAll('[title="'+this.title+'"')
+                    .forEach(el => { 
+                      el.parentElement.remove()
+                    });
+          }
+        }
         this.innerHTML = e.dataTransfer.getData('text/html');
+
+
         completePreferedOrders();
-        items.forEach(function (item) {
-          item.style.opacity = '1';
-          item.classList.remove('over');
-        });
       }
     
       return false;
     }
 
-  let items = document.querySelectorAll('.container .box');
+  let items = document.querySelectorAll('.container-drop .box');
   items.forEach(function(item) {
     item.addEventListener('dragstart', handleDragStart);
     item.addEventListener('dragover', handleDragOver);
