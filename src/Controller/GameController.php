@@ -2,10 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\ColorName;
+use App\Entity\Card;
 use App\Entity\Deck;
 use App\Entity\Game;
-use App\Entity\ValueName;
 use App\Form\GameType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,8 +24,18 @@ class GameController extends AbstractController
             "cards" => $deck->getMixedDeck(),
         ]);
     }
-    
+
     /**
+     * @Route("/reset", name="game_reset", methods={"GET","POST"})
+     */
+    public function gameReset(Request $request): Response
+    {
+        $session = $request->getSession();
+        $session->remove('game');
+        return $this->redirectToRoute('game_init');
+    }
+
+        /**
      * @Route("/", name="game_init", methods={"GET","POST"})
      */
     public function gameInit(Request $request): Response
@@ -42,9 +51,9 @@ class GameController extends AbstractController
        
         if ($form->isSubmitted() && $form->isValid()) {
             //new number of cards to keep
-            $game->setNum($form->getData('num')->getNum());
+            $game->setNum($form->getData()->getNum());
             //new set of cards
-            $game->setCardsTemplate($form->getData('cardsTemplate')->getCardsTemplate());
+            $game->setCardsTemplate($form->getData()->getCardsTemplate());
             //new prefered order of colors and values
             $deck = $game->getDeck();
             $deck->setMixedColors(explode(',',$form->get('preferedColors')->getData()));
@@ -91,7 +100,7 @@ class GameController extends AbstractController
                 /** @var Card $card */
                 foreach ($orderedResult as $card){
                     if ($card->getColor() == $color && $card->getValue() == $value){
-                        array_push($unorderedResult,$card);
+                        $unorderedResult[] = $card;
                     }
                 } 
             }    
